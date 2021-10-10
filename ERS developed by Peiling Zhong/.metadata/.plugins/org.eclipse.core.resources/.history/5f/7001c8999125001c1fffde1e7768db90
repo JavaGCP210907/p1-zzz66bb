@@ -1,0 +1,13 @@
+package com.ers.daos;
+
+import java.util.List;
+
+import com.ers.models.ErsReimbursement;
+
+public interface ReimbursementInterface {
+	
+	public List<ErsReimbursement> getAllReimbursements();
+	
+	public List<ErsReimbursement> getPendingReimbursementEmployees();
+ 
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.ers.models.UpdateStatus&apos; to &apos;UpdateStatusDTO&apos;&#x0A;- Original project: &apos;ERS&apos;&#x0A;- Original element: &apos;com.ers.models.UpdateStatus&apos;&#x0A;- Renamed element: &apos;com.ers.models.UpdateStatusDTO&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;UpdateStatus&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/&lt;com.ers.models{UpdateStatus.java[UpdateStatus" matchStrategy="1" name="UpdateStatusDTO" qualified="false" references="true" similarDeclarations="false" stamp="1633670140490" textual="false" version="1.0"/>
+</session>

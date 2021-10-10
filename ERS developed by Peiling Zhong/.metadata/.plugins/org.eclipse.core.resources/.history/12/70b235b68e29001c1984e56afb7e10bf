@@ -1,0 +1,183 @@
+package com.ers.controllers;
+
+import java.util.List;
+
+import com.ers.models.ErsReimbursement;
+import com.ers.models.RequestDTO;
+import com.ers.models.UpdateStatusDTO;
+import com.ers.services.ReimbursementService;
+import com.google.gson.Gson;
+
+import io.javalin.http.Handler;
+
+public class ReimbursementController {
+	
+	ReimbursementService rs = new ReimbursementService();
+			
+	public Handler getAllReimbursementsHandler = (ctx) -> {
+		
+		//if(ctx.req.getSession(false) != null) {
+		
+		List<ErsReimbursement> allReimbursements = rs.getAllReimbursements();
+		
+		Gson gson = new Gson();
+		
+		String JSONReimbursements = gson.toJson(allReimbursements);
+		
+		ctx.result(JSONReimbursements);
+		
+		ctx.status(200);
+		
+		
+		
+		
+	//	} else {
+		//	ctx.status(403);
+		//}
+	};
+	
+	//public Handler getPastReimbursementsHandler = (ctx) -> {
+		
+	//	ctx.result("Login Failed");	
+		
+
+	//};
+	public Handler getPendingReimbursementEmployeesHandler = (ctx) -> {
+		
+			
+		List<ErsReimbursement> pendingReimbursementEmployees = rs.getPendingReimbursementEmployees();
+		
+		Gson gson = new Gson();
+		
+		String JSONPendingReimbursementEmployees = gson.toJson(pendingReimbursementEmployees);
+		
+		ctx.result(JSONPendingReimbursementEmployees);
+		
+		ctx.status(200);
+		
+		
+	
+	};
+	
+	public Handler getApprovedReimbursementEmployeesHandler = (ctx) -> {
+		
+		
+		List<ErsReimbursement> approvedReimbursementEmployees = rs.getApprovedReimbursementEmployees();
+		
+		Gson gson = new Gson();
+		
+		String JSONApprovedReimbursementEmployees = gson.toJson(approvedReimbursementEmployees);
+		
+		ctx.result(JSONApprovedReimbursementEmployees);
+		
+		ctx.status(200);
+		
+		
+	
+	};
+	
+	public Handler getDeniedReimbursementEmployeesHandler = (ctx) -> {
+		
+		
+		List<ErsReimbursement> deniedReimbursementEmployees = rs.getDeniedReimbursementEmployees();
+		
+		Gson gson = new Gson();
+		
+		String JSONDeniedReimbursementEmployees = gson.toJson(deniedReimbursementEmployees);
+		
+		ctx.result(JSONDeniedReimbursementEmployees);
+		
+		ctx.status(200);
+		
+		
+	
+	};
+	
+	public Handler getPendingReimbursementIndividualHandler = (ctx) -> {
+		
+		
+		String username = ctx.pathParam("username");
+		
+		
+		List<ErsReimbursement> pendingReimbursementIndividual = rs.getPendingReimbursementIndividual(username);
+		
+		Gson gson = new Gson();
+		
+		String JSONPendingReimbursementIndividual = gson.toJson(pendingReimbursementIndividual);
+		
+		ctx.result(JSONPendingReimbursementIndividual);
+		
+		ctx.status(200);
+		
+		
+	
+	};
+	
+	public Handler getPastReimbursementIndividualHandler = (ctx) -> {
+		
+		
+		String username = ctx.pathParam("username");
+		
+		
+		List<ErsReimbursement> pastReimbursementIndividual = rs.getPastReimbursementIndividual(username);
+		
+		Gson gson = new Gson();
+		
+		String JSONPastReimbursementIndividual = gson.toJson(pastReimbursementIndividual);
+		
+		ctx.result(JSONPastReimbursementIndividual);
+		
+		ctx.status(200);
+		
+	
+	};
+	
+	public Handler addreimbursementHandler = (ctx) -> {
+		
+		String body = ctx.body(); 
+		
+		Gson gson = new Gson();
+		
+		RequestDTO request_info = gson.fromJson(body, RequestDTO.class);
+		
+		
+	
+		if(rs.addreimbursement(request_info)) { 
+	
+			ctx.status(200);
+			
+		} else { 
+			
+			ctx.status(401); 
+			ctx.result("Adding Request Failed");		
+		}
+		
+	};
+	
+	
+	public Handler updateStatusHandler= (ctx) -> {
+		
+		
+		String body = ctx.body(); 
+		
+		Gson gson = new Gson();
+		
+		UpdateStatusDTO updateStatus_info = gson.fromJson(body, UpdateStatusDTO.class);
+		
+		
+	
+		if(rs.updateStatus(updateStatus_info)) { 
+	
+			ctx.status(200);
+			
+		} else { 
+			
+			ctx.status(401); 
+			ctx.result("Updating Reimbursement Status Failed");		
+		}
+		
+	
+	};
+	
+	
+}

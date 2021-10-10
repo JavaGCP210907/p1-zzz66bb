@@ -1,0 +1,48 @@
+package com.ers;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import com.ers.controllers.LoginController;
+import com.ers.controllers.ReimbursementController;
+import com.ers.utils.ConnectionUtil;
+
+import io.javalin.Javalin;
+
+public class Launcher {
+
+	public static void main(String[] args) {
+		
+		LoginController lc = new LoginController();
+		ReimbursementController rc = new ReimbursementController();
+		
+		try(Connection conn = ConnectionUtil.getConnection()){
+			System.out.println("You've connected to your database successfully!");
+		} catch (SQLException e) {
+			System.out.println("Your connection failed");
+			e.printStackTrace();
+		}
+		
+		Javalin app = Javalin.create(
+				config -> {
+					config.enableCorsForAllOrigins();
+				}
+				).start(8090);
+		
+		app.post("/login", lc.loginHandler);
+		
+		app.get("/reimbursements", rc.getAllReimbursementsHandler);
+		
+		app.get("/reimbursements/pending", rc.getAllReimbursementsHandler);
+		
+		app.get("reimbursements/approved", rc.getAllReimbursementsHandler);
+		
+		app.get("reimbursements/denied", rc.getAllReimbursementsHandler);
+		
+		app.get("/reimbursements/past/<username>", ctx -> { // the {} syntax does not allow slashes ('/') as part of the parameter
+		    ctx.result("Hello: ");
+		});
+		
+	}
+
+}
